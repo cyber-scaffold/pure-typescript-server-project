@@ -1,7 +1,7 @@
 {
   "name": "pure-typescript-server-project",
   "version": "1.0.0",
-  "description": "基于typescript和express的后端项目",
+  "description": "基于typescript和express的纯后端项目",
   "main": "index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=local node ./scripts/development.js",
