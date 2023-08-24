@@ -5,7 +5,7 @@ import cookieParser from "cookie-parser";
 
 import { router as httpGetInterface } from "@/routes/httpGetInterface";
 import { router as httpPostInterface } from "@/routes/httpPostInterface";
-import { listen_port } from "@/configs/listenPort";
+import { listenPort } from "@/configs/listenPort";
 
 
 const app = express();
@@ -27,6 +27,6 @@ app.use("/docs/swagger.json", async (request, response) => {
 });
 
 
-const server = app.listen(listen_port, "0.0.0.0", () => {
+const server = app.listen(listenPort, "0.0.0.0", () => {
   console.log("address", server.address());
 });

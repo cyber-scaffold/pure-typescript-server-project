@@ -1,7 +1,7 @@
 import { red, green } from "colors";
 import amqp, { Connection } from "amqplib";
-import { get_mysql_connection } from "@/frameworks/mysqlPoolConfig";
-import { get_rabbitmq_compose_config } from "@/configs/rabbitmqConfig";
+import { getMySQLConnection } from "@/frameworks/mysqlPoolConfig";
+import { getRabbitMQComposeConfig } from "@/configs/rabbitmqConfig";
 
 export interface IPublishOption {
   exchangeName: string;
@@ -43,7 +43,7 @@ export abstract class RabbitmqProducer {
   /** 消息队列初始化 **/
   public async initialize() {
     try {
-      const config = await get_rabbitmq_compose_config();
+      const config = await getRabbitMQComposeConfig();
       const rabbitConfig = {
         hostname: config.host,
         port: config.port,
@@ -114,8 +114,8 @@ export abstract class RabbitmqConsumer {
   /** 消息队列初始化 **/
   public async initialize() {
     try {
-      this.databaseConnection = await get_mysql_connection();
-      const config = await get_rabbitmq_compose_config();
+      this.databaseConnection = await getMySQLConnection();
+      const config = await getRabbitMQComposeConfig();
       const rabbitConfig = {
         hostname: config.host,
         port: config.port,

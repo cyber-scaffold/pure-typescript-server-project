@@ -1,6 +1,5 @@
-import os from "os";
-import path from "path";
-import { readFile } from "jsonfile";
+import { getGlobalConfig } from "@/frameworks/getGlobalConfig";
+
 
 export const rabbitmq_config = {
   "host": "0.0.0.0",
@@ -9,9 +8,9 @@ export const rabbitmq_config = {
   "password": "gaea0571"
 };
 
-export async function get_rabbitmq_compose_config() {
-  const gpms_config = await readFile(path.resolve(os.homedir(), "./.gpms_config.json"));
-  const rabbitmq_compose_config = Object.assign({}, rabbitmq_config, gpms_config.rabbitMQ);
-  console.log("当前RabbitMQ配置", JSON.stringify(rabbitmq_compose_config));
-  return rabbitmq_compose_config;
+export async function getRabbitMQComposeConfig() {
+  const globalConfig: any = getGlobalConfig;
+  const rabbitMQComposeConfig = Object.assign({}, rabbitmq_config, globalConfig.rabbitMQ);
+  console.log("当前RabbitMQ配置", JSON.stringify(rabbitMQComposeConfig));
+  return rabbitMQComposeConfig;
 };

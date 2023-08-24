@@ -13,7 +13,7 @@ export async function initialMySQLPool() {
   console.log("连接成功!");
 };
 
-export async function get_mysql_connection(): Promise<PoolConnection> {
+export async function getMySQLConnection(): Promise<PoolConnection> {
 
   try {
     return await mysqlPool.getConnection();

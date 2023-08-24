@@ -14,7 +14,7 @@ const customFormat = format.combine(
 const logs_file_path = path.resolve(process.cwd(), "./logs/");
 
 /** 全局日志 **/
-export const global_logger = createLogger({
+export const globalLogger = createLogger({
   transports: [
     new transports.DailyRotateFile({
       level: "error",
