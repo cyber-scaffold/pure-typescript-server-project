@@ -9,7 +9,7 @@ export function get_global_config() {
 
   if (isDocker()) {
 
-    global_config_path = path.resolve("/home/", "./runtime_config.json")
+    global_config_path = path.join("/etc/", "/application/", "./runtime_config.json")
 
   } else {
 
