@@ -3,7 +3,7 @@ import path from "path";
 import isDocker from "is-docker";
 import { readFileSync } from "jsonfile";
 
-export function get_global_config() {
+export function getGlobalConfig() {
 
   let global_config_path;
 

@@ -2,7 +2,7 @@ import { createPool, Pool, PoolConnection } from "mysql2/promise";
 
 export let mysqlPool: Pool;
 
-export async function initial_mysql_pool() {
+export async function initialMySQLPool() {
   mysqlPool = createPool({
     host: "0.0.0.0",
     port: 43306,
