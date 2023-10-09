@@ -1,6 +1,6 @@
-// import { getGlobalConfig } from "@/frameworks/getGlobalConfig";
+import { getGlobalConfig } from "@/frameworks/getGlobalConfig";
 
 export const listenPort = (() => {
-  // const globalConfig=getGlobalConfig();
-  return 28652;
+  const globalConfig = getGlobalConfig();
+  return globalConfig.server.port;
 })();
