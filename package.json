@@ -4,8 +4,8 @@
   "description": "基于typescript和express的纯后端项目",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=local node ./scripts/development.js",
-    "build": "cross-env NODE_ENV=prod node ./scripts/build.js"
+    "dev": "cross-env NODE_ENV=local node ./frameworks/development.js",
+    "build": "cross-env NODE_ENV=prod node ./frameworks/build.js"
   },
   "keywords": [],
   "author": "",

@@ -1,8 +1,8 @@
 import { red, green } from "colors";
 import amqp, { Connection } from "amqplib";
 
-import { getGlobalConfig } from "@/frameworks/getGlobalConfig";
-import { getMySQLConnection } from "@/frameworks/mysqlPoolConfig";
+import { getGlobalConfig } from "@/resources/getGlobalConfig";
+import { getMySQLConnection } from "@/resources/mysqlPoolConfig";
 
 export interface IPublishOption {
   exchangeName: string;

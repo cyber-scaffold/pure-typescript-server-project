@@ -6,7 +6,7 @@ import cookieParser from "cookie-parser";
 import { router as httpGetInterface } from "@/routes/httpGetInterface";
 import { router as httpPostInterface } from "@/routes/httpPostInterface";
 import { listenPort } from "@/configs/listenPort";
-import { AppDataSource } from "@/frameworks/AppDataSource";
+// import { AppDataSource } from "@/resources/AppDataSource";
 
 const app = express();
 app.use(cookieParser());
@@ -29,7 +29,7 @@ app.use("/docs/swagger.json", async (request, response) => {
 
 const server = app.listen(listenPort, "0.0.0.0", async () => {
   try {
-    await AppDataSource.initialize();
+    // await AppDataSource.initialize();
     console.log("address", server.address());
   } catch (error) {
     console.log(error);

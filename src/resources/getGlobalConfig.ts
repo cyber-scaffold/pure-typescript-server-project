@@ -7,7 +7,7 @@ import { readFileSync } from "jsonfile";
 const defaultConfig = {
   "server": {
     "swagger": true,
-    "port": 28652
+    "port": 28651
   },
   "mysql": {
     "host": "0.0.0.0",
