@@ -1,8 +1,6 @@
 import { red, green } from "colors";
 import amqp, { Connection } from "amqplib";
-
 import { getGlobalConfig } from "@/resources/getGlobalConfig";
-import { getMySQLConnection } from "@/resources/mysqlPoolConfig";
 
 export interface IPublishOption {
   exchangeName: string;
@@ -44,12 +42,12 @@ export abstract class RabbitmqProducer {
   /** 消息队列初始化 **/
   public async initialize() {
     try {
-      const { rabbit } = await getGlobalConfig();
+      const { rabbitmq } = await getGlobalConfig();
       const rabbitConfig = {
-        hostname: rabbit.host,
-        port: rabbit.port,
-        username: rabbit.user,
-        password: rabbit.password
+        hostname: rabbitmq.host,
+        port: rabbitmq.port,
+        username: rabbitmq.user,
+        password: rabbitmq.password
       };
       this.connection = await amqp.connect({
         protocol: "amqp",
@@ -100,9 +98,6 @@ export abstract class RabbitmqConsumer {
   /** 创建Rabbitmq之后的连接 **/
   protected connection: Connection;
 
-  /** 数据库的连接 **/
-  public databaseConnection: any;
-
   constructor(options: IPublishOption) {
     const { exchangeName, routerName, queueName } = options;
     this.Exchange_TTL = `${exchangeName}_TTL`;
@@ -115,13 +110,12 @@ export abstract class RabbitmqConsumer {
   /** 消息队列初始化 **/
   public async initialize() {
     try {
-      this.databaseConnection = await getMySQLConnection();
-      const { rabbit } = await getGlobalConfig();
+      const { rabbitmq } = await getGlobalConfig();
       const rabbitConfig = {
-        hostname: rabbit.host,
-        port: rabbit.port,
-        username: rabbit.user,
-        password: rabbit.password
+        hostname: rabbitmq.host,
+        port: rabbitmq.port,
+        username: rabbitmq.user,
+        password: rabbitmq.password
       };
       this.connection = await amqp.connect({
         protocol: "amqp",
