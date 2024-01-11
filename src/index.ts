@@ -5,8 +5,9 @@ import cookieParser from "cookie-parser";
 
 import { router as httpGetInterface } from "@/routes/httpGetInterface";
 import { router as httpPostInterface } from "@/routes/httpPostInterface";
-import { listenPort } from "@/configs/listenPort";
-// import { AppDataSource } from "@/resources/AppDataSource";
+import { applicationConfigManager } from "@/transactions/bootstrap";
+
+const { port } = applicationConfigManager.getRuntimeConfig();
 
 const app = express();
 app.use(cookieParser());
@@ -26,8 +27,7 @@ app.use("/docs/swagger.json", async (request, response) => {
   response.sendFile(dist_filename);
 });
 
-
-const server = app.listen(listenPort, "0.0.0.0", async () => {
+const server = app.listen(port, "0.0.0.0", async () => {
   try {
     // await AppDataSource.initialize();
     console.log("address", server.address());

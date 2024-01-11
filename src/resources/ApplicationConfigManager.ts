@@ -7,7 +7,9 @@ import { readFile } from "jsonfile";
 export class ApplicationConfigManager {
 
   /** 应用层内置的默认配置 **/
-  private defaultConfig: any = {};
+  private defaultConfig: any = {
+    port: 25624
+  };
 
   /** 操作系统层的配置 **/
   private systemConfig: any = {};
