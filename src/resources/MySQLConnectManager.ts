@@ -6,22 +6,22 @@ export class MySQLConnectManager {
 
   private port: number;
 
-  private user: string;
+  private username: string;
 
   private password: string;
 
   private pool: Pool;
 
   /** 初始化连接 **/
-  public async initialize({ host, port, user, password }): Promise<void> {
+  public async initialize({ host, port, username, password }): Promise<void> {
     this.host = host;
     this.port = port;
-    this.user = user;
+    this.username = username;
     this.password = password;
     this.pool = createPool({
       host: this.host,
       port: this.port,
-      user: this.user,
+      user: this.username,
       password: this.password,
       connectionLimit: 0
     });
