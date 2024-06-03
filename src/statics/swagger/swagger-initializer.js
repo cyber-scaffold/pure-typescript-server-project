@@ -5,10 +5,10 @@ window.onload = function () {
   window.ui = SwaggerUIBundle({
     url: "/docs/swagger.json",
     dom_id: '#swagger-ui',
+    deepLinking: true,
     defaultModelRendering: "model",
     defaultModelsExpandDepth: 10,
     defaultModelExpandDepth: 10,
-    deepLinking: true,
     presets: [
       SwaggerUIBundle.presets.apis,
       SwaggerUIStandalonePreset

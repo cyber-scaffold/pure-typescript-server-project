@@ -13,7 +13,7 @@ module.exports = async function generate_swagger_docs() {
         version: "1.0.0",
       },
     },
-    apis: [path.resolve(process.cwd(), "./src/routes/**/*.ts")],
+    apis: [path.resolve(process.cwd(), "./src/controllers/**/*.ts")],
   });
   await writeFile(dist_filename, swagger_api_docs, { spaces: 2, EOL: "\r\n" });
 };

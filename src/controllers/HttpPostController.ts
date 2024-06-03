@@ -1,11 +1,13 @@
-import { Router } from "express";
-import { responseWrap } from "@/utils/responseWrap";
+import { injectable, inject } from "inversify";
 
-export const router = Router();
+import { RouterController } from "@/commons/Controller/RouterController";
+import { QueryBuilderManager } from "@/commons/MySQL/QueryBuilderManager";
+import { RedisConnectManager } from "@/commons/Redis/RedisConnectManager";
+import { responseWrap } from "@/utils/responseWrap";
 
 /**
  * @openapi
- * /api/httpPostInterface:
+ * /api/HttpPostController:
  *   post:
  *     tags: [信息类]
  *     summary: POST请求示例
@@ -42,6 +44,20 @@ export const router = Router();
  *                   type: string
  *                   description: 状态信息(如果code不等于0的话会将错误信息打印到这里)
  */
-router.post("/api/httpGetInterface", responseWrap(async () => {
-  return true;
-}));
+@injectable()
+export class HttpPostController extends RouterController {
+
+  constructor(
+    @inject(QueryBuilderManager) private readonly queryBuilderManager: QueryBuilderManager,
+    @inject(RedisConnectManager) private readonly redisConnectManager: RedisConnectManager,
+  ) {
+    super()
+  };
+
+  public async definition(): Promise<any> {
+    this.router.post("/api/HttpPostController", responseWrap(async () => {
+      return true;
+    }));
+  };
+
+}

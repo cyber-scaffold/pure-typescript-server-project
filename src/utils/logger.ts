@@ -24,7 +24,7 @@ export const logger = createLogger({
       extension: ".log",
       dirname: "logs",
       datePattern: "YYYY-MM-DD-HH-mm-ss",
-      filename: "collector-log-%DATE%",
+      filename: "logger",
       maxSize: "10m",
       maxFiles: 2
     }),

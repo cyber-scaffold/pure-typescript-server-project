@@ -3,12 +3,41 @@ import path from "path";
 import { merge } from "lodash";
 import pathExists from "path-exists";
 import { readFile } from "jsonfile";
+import { injectable } from "inversify";
 
+@injectable()
 export class ApplicationConfigManager {
 
   /** 应用层内置的默认配置 **/
   private defaultConfig: any = {
-    port: 25624
+    docs: false,
+    server: {
+      port: 15200
+    },
+    redis: {
+      port: 56379,
+      host: "0.0.0.0",
+    },
+    mysql: {
+      port: 53306,
+      host: "0.0.0.0",
+      username: "root",
+      password: "gaea0571",
+      database: "gmecamp_config"
+    },
+    rabbitmq: {
+      host: "0.0.0.0",
+      port: 45672,
+      username: "root",
+      password: "gaea0571"
+    },
+    mongodb: {
+      host: "localhost",
+      port: 27017,
+      username: "root",
+      password: "gaea0571",
+      database: "test_data"
+    },
   };
 
   /** 操作系统层的配置 **/
