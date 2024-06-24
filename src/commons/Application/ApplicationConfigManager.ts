@@ -15,11 +15,11 @@ export class ApplicationConfigManager {
       port: 15200
     },
     redis: {
-      port: 56379,
+      port: 6379,
       host: "0.0.0.0",
     },
     mysql: {
-      port: 53306,
+      port: 3306,
       host: "0.0.0.0",
       username: "root",
       password: "gaea0571",
@@ -27,17 +27,17 @@ export class ApplicationConfigManager {
     },
     rabbitmq: {
       host: "0.0.0.0",
-      port: 45672,
+      port: 5672,
       username: "root",
       password: "gaea0571"
     },
     mongodb: {
-      host: "localhost",
+      host: "0.0.0.0",
       port: 27017,
       username: "root",
       password: "gaea0571",
       database: "test_data"
-    },
+    }
   };
 
   /** 操作系统层的配置 **/
