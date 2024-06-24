@@ -5,7 +5,7 @@ const nodeExternals = require("webpack-node-externals");
 const basic_server_config = require("../server/webpack.server.basic");
 
 module.exports = merge(basic_server_config, {
-  mode: "production",
+  mode: "none",
   output: {
     clean: false,
     path: path.resolve(process.cwd(), "./dist/"),
