@@ -21,7 +21,8 @@ export class QueryBuilderManager {
         host: mysql.host,
         port: mysql.port,
         user: mysql.username,
-        password: mysql.password
+        password: mysql.password,
+        database: mysql.database
       }
     });
     console.log("knex数据访问层初始化成功!");
