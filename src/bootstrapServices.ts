@@ -5,6 +5,6 @@ import { MainServices } from "@/services/MainServices";
 
 export async function bootstrapServices() {
 
-  IOCContainer.bind(MainServices).toSelf().inSingletonScope();
+  IOCContainer.bind(MainServices).toSelf();
 
 };
