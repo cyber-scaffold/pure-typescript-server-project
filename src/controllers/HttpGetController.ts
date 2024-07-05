@@ -1,13 +1,13 @@
 import { injectable, inject } from "inversify";
+import { Router, Request, Response } from "express";
 
-import { RouterController } from "@/commons/Controller/RouterController";
+import { IOCContainer } from "@/commons/Application/IOCContainer";
 import { QueryBuilderManager } from "@/commons/MySQL/QueryBuilderManager";
 import { RedisConnectManager } from "@/commons/Redis/RedisConnectManager";
 
-import { MainServiceFactory, MainServiceProvider } from "@/services/MainService";
+import { TransientService } from "@/services/TransientService";
 
 import { responseWrap } from "@/utils/responseWrap";
-
 
 /**
  * @openapi
@@ -47,22 +47,21 @@ import { responseWrap } from "@/utils/responseWrap";
  *                   type: string
  *                   description: 状态信息(如果code不等于0的话会将错误信息打印到这里)
  */
+export const router = Router().get("/api/HttpGetProcess", responseWrap(async (request: Request, responses: Response) => {
+  return await IOCContainer.get(HttpGetProcess).execute(request, responses);
+}));
+
 @injectable()
-export class HttpGetController extends RouterController {
+export class HttpGetProcess {
 
   constructor(
     @inject(QueryBuilderManager) private readonly queryBuilderManager: QueryBuilderManager,
     @inject(RedisConnectManager) private readonly redisConnectManager: RedisConnectManager,
-    @inject(MainServiceFactory) private readonly mainServiceProvider: MainServiceProvider
-  ) {
-    super()
-  };
+    @inject(TransientService) private readonly transientService: TransientService
+  ) { };
 
-  async definition(): Promise<any> {
-    this.router.get("/api/HttpGetController", responseWrap(async () => {
-      const mainService = this.mainServiceProvider();
-      return await mainService.execute();
-    }));
+  public async execute(request: Request, responses: Response): Promise<any> {
+    return await this.transientService.execute();
   }
 
 };

@@ -7,8 +7,8 @@ import { injectable, inject } from "inversify";
 
 import { ApplicationConfigManager } from "@/commons/Application/ApplicationConfigManager";
 
-import { HttpGetController } from "@/controllers/HttpGetController";
-import { HttpPostController } from "@/controllers/HttpPostController";
+import { router as HttpGetRouter } from "@/controllers/HttpGetController";
+import { router as HttpPostRouter } from "@/controllers/HttpPostController";
 
 @injectable()
 export class ExpressHttpServer {
@@ -21,8 +21,6 @@ export class ExpressHttpServer {
 
   constructor(
     @inject(ApplicationConfigManager) private readonly applicationConfigManager: ApplicationConfigManager,
-    @inject(HttpPostController) private readonly httpPostController: HttpPostController,
-    @inject(HttpGetController) private readonly httpGetController: HttpGetController,
   ) { }
 
   async bootstrap() {
@@ -30,8 +28,8 @@ export class ExpressHttpServer {
     this.app.use(cookieParser());
     this.app.use(bodyParser.json());
     /** 注册控制器 **/
-    this.httpGetController.registryRouter(this.app);
-    this.httpPostController.registryRouter(this.app);
+    this.app.use(HttpGetRouter);
+    this.app.use(HttpPostRouter);
     /** 启动swagger文档 **/
     const swagger_file_dir = path.resolve(this.filebaseDirectory, "./statics/swagger/");
     this.app.use("/docs", express.static(swagger_file_dir));
