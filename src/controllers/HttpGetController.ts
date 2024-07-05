@@ -3,6 +3,9 @@ import { injectable, inject } from "inversify";
 import { RouterController } from "@/commons/Controller/RouterController";
 import { QueryBuilderManager } from "@/commons/MySQL/QueryBuilderManager";
 import { RedisConnectManager } from "@/commons/Redis/RedisConnectManager";
+
+import { MainServiceFactory, MainServiceProvider } from "@/services/MainService";
+
 import { responseWrap } from "@/utils/responseWrap";
 
 
@@ -50,13 +53,15 @@ export class HttpGetController extends RouterController {
   constructor(
     @inject(QueryBuilderManager) private readonly queryBuilderManager: QueryBuilderManager,
     @inject(RedisConnectManager) private readonly redisConnectManager: RedisConnectManager,
+    @inject(MainServiceFactory) private readonly mainServiceProvider: MainServiceProvider
   ) {
     super()
   };
 
   async definition(): Promise<any> {
     this.router.get("/api/HttpGetController", responseWrap(async () => {
-      return true;
+      const mainService = this.mainServiceProvider();
+      return await mainService.execute();
     }));
   }
 
