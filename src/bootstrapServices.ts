@@ -8,7 +8,7 @@ export async function bootstrapServices() {
 
   IOCContainer.bind(SessionInfoService).toSelf().inRequestScope();
 
-  IOCContainer.bind(TransientFactoryService).toSelf();
+  IOCContainer.bind(TransientFactoryService).toSelf().inTransientScope();
   IOCContainer.bind(TransientFactoryServiceFactory).toFactory(TransientFactoryServiceFactory);
 
 };
