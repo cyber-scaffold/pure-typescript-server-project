@@ -1,7 +1,6 @@
 import { injectable, inject } from "inversify";
 import { Router, Request, Response } from "express";
 
-import { IOCContainer } from "@/commons/Application/IOCContainer";
 // import { QueryBuilderManager } from "@/commons/MySQL/QueryBuilderManager";
 // import { RedisConnectManager } from "@/commons/Redis/RedisConnectManager";
 
@@ -50,9 +49,8 @@ import { responseWrap } from "@/utils/responseWrap";
  *                   description: 状态信息(如果code不等于0的话会将错误信息打印到这里)
  */
 export const router = Router().get("/api/HttpGetProcess", responseWrap(async (request: Request, response: Response) => {
-  const requestScopeContainer = IOCContainer.createChild();
-  requestScopeContainer.bind(HttpGetProcess).toSelf().inSingletonScope();
-  return await requestScopeContainer.get(HttpGetProcess).execute(request, response);
+  request.requestScopeContainer.bind(HttpGetProcess).toSelf().inRequestScope();
+  return await request.requestScopeContainer.get(HttpGetProcess).execute(request, response);
 }));
 
 @injectable()

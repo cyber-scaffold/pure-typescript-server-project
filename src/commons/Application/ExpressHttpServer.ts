@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import { injectable, inject } from "inversify";
 
 import { ApplicationConfigManager } from "@/commons/Application/ApplicationConfigManager";
+import { requestScopeMiddleware } from "@/interceptors/requestScopeMiddleware";
 
 import { router as HttpGetRouter } from "@/controllers/HttpGetController";
 import { router as HttpPostRouter } from "@/controllers/HttpPostController";
@@ -27,6 +28,8 @@ export class ExpressHttpServer {
     /** 注册中间件 **/
     this.app.use(cookieParser());
     this.app.use(bodyParser.json());
+    /** 注册请求级容器中间件 **/
+    this.app.use(requestScopeMiddleware);
     /** 注册控制器 **/
     this.app.use(HttpGetRouter);
     this.app.use(HttpPostRouter);

@@ -7,7 +7,7 @@ import { IOCContainer } from "@/commons/Application/IOCContainer";
 declare global {
   namespace Express {
     interface Request {
-      childContainer: Container;
+      requestScopeContainer: Container;
     }
   }
 };
@@ -21,6 +21,6 @@ declare global {
  * **/
 export async function requestScopeMiddleware(request: Request, response: Response, next: NextFunction) {
   const childContainer = IOCContainer.createChild();
-  request.childContainer = childContainer;
+  request.requestScopeContainer = childContainer;
   next();
 };
