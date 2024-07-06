@@ -3,9 +3,12 @@ import { injectable, inject } from "inversify";
 
 import { ApplicationConfigManager } from "@/commons/Application/ApplicationConfigManager";
 
-
+/**
+ * 会话级别的服务就特别适合用 RequestScope 作用域
+ * 需要在中间件或者入口函数处使用container.createChild()初始化
+ * **/
 @injectable()
-export class TransientService {
+export class SessionInfoService {
 
   private id = uuidv4();
 
@@ -13,8 +16,8 @@ export class TransientService {
     @inject(ApplicationConfigManager) private readonly applicationConfigManager: ApplicationConfigManager
   ) { };
 
-  public async execute() {
-    console.log("这是一个瞬态服务", this.id);
+  public async getSessionInfo() {
+    return this.id;
   };
 
 };

@@ -2,16 +2,16 @@ import { IOCContainer } from "@/commons/Application/IOCContainer";
 import { ExpressHttpServer } from "@/commons/Application/ExpressHttpServer";
 
 import { bootstrapApplication } from "@/bootstrapApplication";
-import { bootstrapController } from "@/bootstrapController";
+import { bootstrapControllers } from "@/bootstrapControllers";
 import { bootstrapServices } from "@/bootstrapServices";
 
 setImmediate(async () => {
 
-  await bootstrapServices();
-  await bootstrapController();
   await bootstrapApplication();
+  await bootstrapServices();
+  await bootstrapControllers();
 
-  IOCContainer.bind(ExpressHttpServer).toSelf();
+  IOCContainer.bind(ExpressHttpServer).toSelf().inSingletonScope();
   await IOCContainer.get(ExpressHttpServer).bootstrap();
 
 });
