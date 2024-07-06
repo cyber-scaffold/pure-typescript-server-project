@@ -7,10 +7,10 @@ interface IOptions {
 
 const default_options = {
   successPadding: (response_value: any) => {
-    return { code: 0, data: response_value || null, message: "ok" }
+    return { code: 0, data: response_value || null, message: "ok" };
   },
   errorPadding: (message: any) => {
-    return { code: 10000, data: null, message }
+    return { code: 10000, data: null, message };
   }
 };
 

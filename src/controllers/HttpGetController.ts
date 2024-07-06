@@ -6,6 +6,7 @@ import { IOCContainer } from "@/commons/Application/IOCContainer";
 // import { RedisConnectManager } from "@/commons/Redis/RedisConnectManager";
 
 import { TransientFactoryServiceFactory, TransientFactoryServiceProvider } from "@/services/TransientFactoryService";
+import { UserMessageService } from "@/services/UserMessageService";
 import { SessionInfoService } from "@/services/SessionInfoService";
 
 import { responseWrap } from "@/utils/responseWrap";
@@ -61,6 +62,7 @@ export class HttpGetProcess {
     // @inject(QueryBuilderManager) private readonly queryBuilderManager: QueryBuilderManager,
     // @inject(RedisConnectManager) private readonly redisConnectManager: RedisConnectManager,
     @inject(SessionInfoService) private readonly sessionInfoService: SessionInfoService,
+    @inject(UserMessageService) private readonly userMessageService: UserMessageService,
     @inject(TransientFactoryServiceFactory) private readonly transientFactoryServiceProvider: TransientFactoryServiceProvider
   ) { };
 
@@ -69,9 +71,11 @@ export class HttpGetProcess {
     const transientServiceResult2 = await this.transientFactoryServiceProvider().execute();
     const requestScopeServiceResult1 = await this.sessionInfoService.getSessionInfo();
     const requestScopeServiceResult2 = await this.sessionInfoService.getSessionInfo();
+    const userMessage = await this.userMessageService.execute();
     return {
       "瞬态服务的结果": [transientServiceResult1, transientServiceResult2],
-      "请求作用域级别的结果": [requestScopeServiceResult1, requestScopeServiceResult2]
+      "请求作用域级别的结果": [requestScopeServiceResult1, requestScopeServiceResult2],
+      "用户信息": userMessage
     };
   };
 
