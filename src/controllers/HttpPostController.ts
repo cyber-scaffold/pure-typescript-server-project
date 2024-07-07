@@ -5,6 +5,8 @@ import { Router, Request, Response } from "express";
 // import { RedisConnectManager } from "@/commons/Redis/RedisConnectManager";
 
 import { TransientFactoryServiceFactory, TransientFactoryServiceProvider } from "@/services/TransientFactoryService";
+import { RequestFactoryServiceFactory, RequestFactoryServiceProvider } from "@/services/RequestFactoryService";
+import { UserMessageService } from "@/services/UserMessageService";
 import { SessionInfoService } from "@/services/SessionInfoService";
 import { responseWrap } from "@/utils/responseWrap";
 
@@ -60,17 +62,24 @@ export class HttpPostProcess {
     // @inject(QueryBuilderManager) private readonly queryBuilderManager: QueryBuilderManager,
     // @inject(RedisConnectManager) private readonly redisConnectManager: RedisConnectManager,
     @inject(SessionInfoService) private readonly sessionInfoService: SessionInfoService,
+    @inject(UserMessageService) private readonly userMessageService: UserMessageService,
+    @inject(RequestFactoryServiceFactory) private readonly requestFactoryServiceProvider: RequestFactoryServiceProvider,
     @inject(TransientFactoryServiceFactory) private readonly transientFactoryServiceProvider: TransientFactoryServiceProvider
   ) { };
 
   public async execute(request: Request, response: Response): Promise<any> {
-    const transientServiceResult1 = await this.transientFactoryServiceProvider().execute();
-    const transientServiceResult2 = await this.transientFactoryServiceProvider().execute();
+    const transientFactoryResult1 = await this.transientFactoryServiceProvider().execute();
+    const transientFactoryResult2 = await this.transientFactoryServiceProvider().execute();
+    const requestFacoryResult1 = await this.requestFactoryServiceProvider().execute();
+    const requestFacoryResult2 = await this.requestFactoryServiceProvider().execute();
     const requestScopeServiceResult1 = await this.sessionInfoService.getSessionInfo();
     const requestScopeServiceResult2 = await this.sessionInfoService.getSessionInfo();
+    const userMessage = await this.userMessageService.execute();
     return {
-      "瞬态服务的结果": [transientServiceResult1, transientServiceResult2],
-      "请求作用域级别的结果": [requestScopeServiceResult1, requestScopeServiceResult2]
+      "瞬态级别作用域工厂函数的结果": [transientFactoryResult1, transientFactoryResult2],
+      "请求级别作用域工厂函数的结果": [requestFacoryResult1, requestFacoryResult2],
+      "请求级别作用域的结果": [requestScopeServiceResult1, requestScopeServiceResult2],
+      "用户信息": userMessage
     };
   };
 
