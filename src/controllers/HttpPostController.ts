@@ -3,6 +3,7 @@ import { Router, Request, Response } from "express";
 
 // import { QueryBuilderManager } from "@/commons/MySQL/QueryBuilderManager";
 // import { RedisConnectManager } from "@/commons/Redis/RedisConnectManager";
+import { IOCContainer } from "@/commons/Application/IOCContainer";
 
 import { TransientFactoryServiceFactory, TransientFactoryServiceProvider } from "@/services/TransientFactoryService";
 import { RequestFactoryServiceFactory, RequestFactoryServiceProvider } from "@/services/RequestFactoryService";
@@ -51,8 +52,7 @@ import { responseWrap } from "@/utils/responseWrap";
  *                   description: 状态信息(如果code不等于0的话会将错误信息打印到这里)
  */
 export const router = Router().post("/api/HttpPostController", responseWrap(async (request: Request, response: Response) => {
-  request.requestScopeContainer.bind(HttpPostProcess).toSelf().inSingletonScope();
-  return await request.requestScopeContainer.get(HttpPostProcess).execute(request, response);
+  return await IOCContainer.get(HttpPostProcess).execute(request, response);
 }));
 
 @injectable()
@@ -83,4 +83,6 @@ export class HttpPostProcess {
     };
   };
 
-}
+};
+
+IOCContainer.bind(HttpPostProcess).toSelf().inRequestScope();
