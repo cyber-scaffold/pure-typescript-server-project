@@ -18,20 +18,20 @@ export class LimitedRabbitmqProducer {
 
   public channel: any;
 
-  protected Exchange_TTL: string;
+  private Exchange_TTL: string;
 
-  protected Queue_TTL: string;
+  private Queue_TTL: string;
 
-  protected RoutingKey_TTL: string;
+  private RoutingKey_TTL: string;
 
-  protected Exchange_DLX: string;
+  private Exchange_DLX: string;
 
-  protected Queue_DLX: string;
+  private Queue_DLX: string;
 
-  protected RoutingKey_DLX: string;
+  private RoutingKey_DLX: string;
 
   /** 创建Rabbitmq之后的连接 **/
-  protected connection: Connection;
+  private connection: Connection;
 
   constructor(
     @inject(ApplicationConfigManager) private readonly $ApplicationConfigManager: ApplicationConfigManager

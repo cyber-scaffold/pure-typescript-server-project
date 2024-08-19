@@ -11,7 +11,6 @@ import { QueryBuilderManager } from "@/commons/MySQL/QueryBuilderManager";
 import { RedisConnectManager } from "@/commons/Redis/RedisConnectManager";
 
 
-
 setImmediate(async () => {
 
   /** 初始化应用配置 **/
