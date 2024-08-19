@@ -1,6 +1,6 @@
 const webpack = require("webpack");
 
-const server_webpack_config = require("./server/webpack.server.build");
+const server_webpack_config = require("./webpack/webpack.server.build");
 const generate_swagger_docs = require("./utils/generate_swagger_docs");
 
 (async () => {

@@ -3,7 +3,7 @@ const webpack = require("webpack");
 const spawn = require("cross-spawn");
 const { EventEmitter } = require("events");
 
-const server_webpack_config = require("./server/webpack.server.development");
+const server_webpack_config = require("./webpack/webpack.server.development");
 const generate_swagger_docs = require("./utils/generate_swagger_docs");
 
 (async () => {

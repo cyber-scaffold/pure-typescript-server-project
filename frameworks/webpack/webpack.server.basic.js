@@ -2,7 +2,7 @@ const path = require("path");
 const WebpackBar = require("webpackbar");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
-const program_loader = require("../configs/program_loader");
+const program_loader = require("../loaders/program_loader");
 
 module.exports = {
   target: "node",
