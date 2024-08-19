@@ -6,7 +6,6 @@ import { IOCContainer } from "@/commons/Application/IOCContainer";
 
 /**
  * 会话级别的服务就特别适合用 RequestScope 作用域
- * 需要在中间件或者入口函数处使用container.createChild()初始化
  * **/
 @injectable()
 export class SessionInfoService {
