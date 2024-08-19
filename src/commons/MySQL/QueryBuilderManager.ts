@@ -2,6 +2,7 @@ import knex, { Knex } from "knex";
 import { injectable, inject } from "inversify";
 
 import { ApplicationConfigManager } from "@/commons/Application/ApplicationConfigManager";
+import { IOCContainer } from "@/commons/Application/IOCContainer";
 
 @injectable()
 export class QueryBuilderManager {
@@ -9,12 +10,12 @@ export class QueryBuilderManager {
   private _knexQueryBuilder: Knex;
 
   constructor(
-    @inject(ApplicationConfigManager) private readonly applicationConfigManager: ApplicationConfigManager
+    @inject(ApplicationConfigManager) private readonly $ApplicationConfigManager: ApplicationConfigManager
   ) { };
 
   /** 初始化knex**/
   public async initialize() {
-    const { mysql } = this.applicationConfigManager.getRuntimeConfig();
+    const { mysql } = this.$ApplicationConfigManager.getRuntimeConfig();
     this._knexQueryBuilder = knex({
       client: "mysql2",
       connection: {
@@ -34,3 +35,5 @@ export class QueryBuilderManager {
   };
 
 };
+
+IOCContainer.bind(QueryBuilderManager).toSelf().inSingletonScope();

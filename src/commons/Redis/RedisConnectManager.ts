@@ -2,6 +2,7 @@ import { injectable, inject } from "inversify";
 import { createClient, RedisClientType } from "redis";
 
 import { ApplicationConfigManager } from "@/commons/Application/ApplicationConfigManager";
+import { IOCContainer } from "@/commons/Application/IOCContainer";
 
 @injectable()
 export class RedisConnectManager {
@@ -9,12 +10,12 @@ export class RedisConnectManager {
   private connection: RedisClientType;
 
   constructor(
-    @inject(ApplicationConfigManager) private readonly applicationConfigManager: ApplicationConfigManager
+    @inject(ApplicationConfigManager) private readonly $ApplicationConfigManager: ApplicationConfigManager
   ) { };
 
   /** 初始化Redis连接 **/
   public async initialize(): Promise<void> {
-    const { redis } = this.applicationConfigManager.getRuntimeConfig();
+    const { redis } = this.$ApplicationConfigManager.getRuntimeConfig();
     try {
       this.connection = createClient({
         url: `redis://${redis.host}:${redis.port}`,
@@ -46,29 +47,4 @@ export class RedisConnectManager {
 
 };
 
-
-// import Redis from "ioredis";
-
-// export let redisConnection: any;
-
-// export async function createRedisConnection() {
-
-//   try {
-//     const client = new Redis({
-//       host: "0.0.0.0",
-//       port: 36379,
-//       autoResendUnfulfilledCommands: false,
-//       retryStrategy() {
-//         return 2000;
-//       }
-//     });
-
-//     client.on("connect", () => {
-//       console.log("连接成功!");
-//       redisConnection = client;
-//     });
-
-//   } catch (error) {
-//     throw error;
-//   };
-// };
+IOCContainer.bind(RedisConnectManager).toSelf().inSingletonScope();

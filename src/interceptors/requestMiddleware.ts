@@ -13,7 +13,7 @@ declare global {
  * 如果存在类似于SessionService这样在每个网络请求的时候只初始化一次的服务
  * 就需要在这里添加给request
  * **/
-export async function requestScopeMiddleware(request: Request, response: Response, next: NextFunction) {
+export async function requestMiddleware(request: Request, response: Response, next: NextFunction) {
 
   next();
 };

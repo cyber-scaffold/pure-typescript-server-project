@@ -5,6 +5,8 @@ import pathExists from "path-exists";
 import { readFile } from "jsonfile";
 import { injectable } from "inversify";
 
+import { IOCContainer } from "@/commons/Application/IOCContainer";
+
 @injectable()
 export class ApplicationConfigManager {
 
@@ -73,3 +75,5 @@ export class ApplicationConfigManager {
   };
 
 };
+
+IOCContainer.bind(ApplicationConfigManager).toSelf().inSingletonScope();

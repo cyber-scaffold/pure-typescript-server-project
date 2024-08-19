@@ -2,6 +2,7 @@ import { DataSource } from "typeorm";
 import { injectable, inject } from "inversify";
 
 import { ApplicationConfigManager } from "@/commons/Application/ApplicationConfigManager";
+import { IOCContainer } from "@/commons/Application/IOCContainer";
 
 /** 很多分库分表都是在应用层完成的,一般都是根据数据库名进行区分 **/
 @injectable()
@@ -11,12 +12,12 @@ export class DataSourceManager {
   private appDataSource: DataSource;
 
   constructor(
-    @inject(ApplicationConfigManager) private readonly applicationConfigManager: ApplicationConfigManager
+    @inject(ApplicationConfigManager) private readonly $ApplicationConfigManager: ApplicationConfigManager
   ) { };
 
   /** 初始化 **/
   public initialize() {
-    const { mysql } = this.applicationConfigManager.getRuntimeConfig();
+    const { mysql } = this.$ApplicationConfigManager.getRuntimeConfig();
     this.appDataSource = new DataSource({
       type: "mysql",
       port: mysql.port,
@@ -39,6 +40,8 @@ export class DataSourceManager {
   };
 
 };
+
+IOCContainer.bind(DataSourceManager).toSelf().inSingletonScope();
 
 /**
  * @description 配置样例如下

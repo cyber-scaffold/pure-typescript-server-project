@@ -6,7 +6,9 @@ import cookieParser from "cookie-parser";
 import { injectable, inject } from "inversify";
 
 import { ApplicationConfigManager } from "@/commons/Application/ApplicationConfigManager";
-import { requestScopeMiddleware } from "@/interceptors/requestScopeMiddleware";
+import { IOCContainer } from "@/commons/Application/IOCContainer";
+
+import { requestMiddleware } from "@/interceptors/requestMiddleware";
 
 import { router as HttpGetRouter } from "@/controllers/HttpGetController";
 import { router as HttpPostRouter } from "@/controllers/HttpPostController";
@@ -21,7 +23,7 @@ export class ExpressHttpServer {
   private filebaseDirectory = path.dirname(__filename);
 
   constructor(
-    @inject(ApplicationConfigManager) private readonly applicationConfigManager: ApplicationConfigManager,
+    @inject(ApplicationConfigManager) private readonly $ApplicationConfigManager: ApplicationConfigManager,
   ) { }
 
   async bootstrap() {
@@ -29,7 +31,7 @@ export class ExpressHttpServer {
     this.app.use(cookieParser());
     this.app.use(bodyParser.json());
     /** 注册请求级容器中间件 **/
-    this.app.use(requestScopeMiddleware);
+    this.app.use(requestMiddleware);
     /** 注册控制器 **/
     this.app.use(HttpGetRouter);
     this.app.use(HttpPostRouter);
@@ -41,7 +43,7 @@ export class ExpressHttpServer {
       response.sendFile(dist_filename);
     });
     /** 启动服务器监听端口 **/
-    const { server } = this.applicationConfigManager.getRuntimeConfig();
+    const { server } = this.$ApplicationConfigManager.getRuntimeConfig();
     this.server = this.app.listen(server.port, async () => {
       try {
         console.log("address", this.server.address());
@@ -53,3 +55,5 @@ export class ExpressHttpServer {
   };
 
 };
+
+IOCContainer.bind(ExpressHttpServer).toSelf().inSingletonScope();

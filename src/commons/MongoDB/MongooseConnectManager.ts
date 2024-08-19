@@ -2,6 +2,7 @@ import { injectable, inject } from "inversify";
 import { createConnection, Connection } from "mongoose";
 
 import { ApplicationConfigManager } from "@/commons/Application/ApplicationConfigManager";
+import { IOCContainer } from "@/commons/Application/IOCContainer";
 
 @injectable()
 export class MongooseConnectManager {
@@ -9,12 +10,12 @@ export class MongooseConnectManager {
   private connection: Connection;
 
   constructor(
-    @inject(ApplicationConfigManager) private readonly applicationConfigManager: ApplicationConfigManager
+    @inject(ApplicationConfigManager) private readonly $ApplicationConfigManager: ApplicationConfigManager
   ) { };
 
   public async initialize() {
     try {
-      const { mongodb } = this.applicationConfigManager.getRuntimeConfig();
+      const { mongodb } = this.$ApplicationConfigManager.getRuntimeConfig();
       const { host, port, username, password, dataDb } = mongodb;
       const connectionURL = `mongodb://${username}:${password}@${host}:${port}/${dataDb}?authSource=admin`;
       const connection = await createConnection(connectionURL);
@@ -38,3 +39,5 @@ export class MongooseConnectManager {
   };
 
 };
+
+IOCContainer.bind(MongooseConnectManager).toSelf().inSingletonScope();

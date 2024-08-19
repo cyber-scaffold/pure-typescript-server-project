@@ -60,20 +60,20 @@ export class HttpGetProcess {
   constructor(
     // @inject(QueryBuilderManager) private readonly queryBuilderManager: QueryBuilderManager,
     // @inject(RedisConnectManager) private readonly redisConnectManager: RedisConnectManager,
-    @inject(SessionInfoService) private readonly sessionInfoService: SessionInfoService,
-    @inject(UserMessageService) private readonly userMessageService: UserMessageService,
-    @inject(RequestFactoryServiceFactory) private readonly requestFactoryServiceProvider: RequestFactoryServiceProvider,
-    @inject(TransientFactoryServiceFactory) private readonly transientFactoryServiceProvider: TransientFactoryServiceProvider
+    @inject(SessionInfoService) private readonly $SessionInfoService: SessionInfoService,
+    @inject(UserMessageService) private readonly $UserMessageService: UserMessageService,
+    @inject(RequestFactoryServiceFactory) private readonly $RequestFactoryServiceProvider: RequestFactoryServiceProvider,
+    @inject(TransientFactoryServiceFactory) private readonly $TransientFactoryServiceProvider: TransientFactoryServiceProvider
   ) { };
 
   public async execute(request: Request, responses: Response): Promise<any> {
-    const transientFactoryResult1 = await this.transientFactoryServiceProvider().execute();
-    const transientFactoryResult2 = await this.transientFactoryServiceProvider().execute();
-    const requestFacoryResult1 = await this.requestFactoryServiceProvider().execute();
-    const requestFacoryResult2 = await this.requestFactoryServiceProvider().execute();
-    const requestScopeServiceResult1 = await this.sessionInfoService.getSessionInfo();
-    const requestScopeServiceResult2 = await this.sessionInfoService.getSessionInfo();
-    const userMessage = await this.userMessageService.execute();
+    const transientFactoryResult1 = await this.$TransientFactoryServiceProvider().execute();
+    const transientFactoryResult2 = await this.$TransientFactoryServiceProvider().execute();
+    const requestFacoryResult1 = await this.$RequestFactoryServiceProvider().execute();
+    const requestFacoryResult2 = await this.$RequestFactoryServiceProvider().execute();
+    const requestScopeServiceResult1 = await this.$SessionInfoService.getSessionInfo();
+    const requestScopeServiceResult2 = await this.$SessionInfoService.getSessionInfo();
+    const userMessage = await this.$UserMessageService.execute();
     return {
       "瞬态级别作用域工厂函数的结果": [transientFactoryResult1, transientFactoryResult2],
       "请求级别作用域工厂函数的结果": [requestFacoryResult1, requestFacoryResult2],

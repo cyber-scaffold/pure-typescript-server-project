@@ -2,6 +2,7 @@ import { injectable, inject } from "inversify";
 import { createPool, Pool, PoolConnection } from "mysql2/promise";
 
 import { ApplicationConfigManager } from "@/commons/Application/ApplicationConfigManager";
+import { IOCContainer } from "@/commons/Application/IOCContainer";
 
 @injectable()
 export class MySQLConnectManager {
@@ -11,12 +12,12 @@ export class MySQLConnectManager {
   private connection: PoolConnection;
 
   constructor(
-    @inject(ApplicationConfigManager) private readonly applicationConfigManager: ApplicationConfigManager
+    @inject(ApplicationConfigManager) private readonly $ApplicationConfigManager: ApplicationConfigManager
   ) { };
 
   /** 初始化连接 **/
   public async initialize(): Promise<void> {
-    const { mysql } = this.applicationConfigManager.getRuntimeConfig();
+    const { mysql } = this.$ApplicationConfigManager.getRuntimeConfig();
     this.pool = createPool({
       host: mysql.host,
       port: mysql.port,
@@ -49,3 +50,5 @@ export class MySQLConnectManager {
   };
 
 };
+
+IOCContainer.bind(MySQLConnectManager).toSelf().inSingletonScope();
