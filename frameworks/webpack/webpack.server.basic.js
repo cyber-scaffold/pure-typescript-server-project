@@ -25,7 +25,7 @@ module.exports = {
     new WebpackBar({ name: "编译服务端" }),
     new CopyWebpackPlugin({
       patterns: [{
-        from: path.resolve(process.cwd(), "./src/statics/"),
+        from: path.resolve(process.cwd(), "./src/resources/"),
         to: path.resolve(process.cwd(), "./dist/statics")
       }]
     })
