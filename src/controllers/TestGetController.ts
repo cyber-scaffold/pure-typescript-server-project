@@ -14,7 +14,7 @@ import { responseWrap } from "@/utils/responseWrap";
 
 /**
  * @openapi
- * /api/HttpGetController:
+ * /api/get/test:
  *   get:
  *     tags: [信息类]
  *     summary: GET请求示例
@@ -50,12 +50,8 @@ import { responseWrap } from "@/utils/responseWrap";
  *                   type: string
  *                   description: 状态信息(如果code不等于0的话会将错误信息打印到这里)
  */
-export const router = Router().get("/api/HttpGetProcess", responseWrap(async (request: Request, response: Response) => {
-  return await IOCContainer.get(HttpGetProcess).execute(request, response);
-}));
-
 @injectable()
-export class HttpGetProcess {
+export class TestGetController {
 
   constructor(
     // @inject(QueryBuilderManager) private readonly queryBuilderManager: QueryBuilderManager,
@@ -65,6 +61,12 @@ export class HttpGetProcess {
     @inject(RequestFactoryServiceFactory) private readonly $RequestFactoryServiceProvider: RequestFactoryServiceProvider,
     @inject(TransientFactoryServiceFactory) private readonly $TransientFactoryServiceProvider: TransientFactoryServiceProvider
   ) { };
+
+  public getRouter() {
+    return Router().get("/api/get/test", responseWrap(async (request: Request, response: Response) => {
+      return await this.execute(request, response);
+    }));
+  };
 
   public async execute(request: Request, responses: Response): Promise<any> {
     const transientFactoryResult1 = await this.$TransientFactoryServiceProvider().execute();
@@ -84,4 +86,4 @@ export class HttpGetProcess {
 
 };
 
-IOCContainer.bind(HttpGetProcess).toSelf().inRequestScope();
+IOCContainer.bind(TestGetController).toSelf().inRequestScope();

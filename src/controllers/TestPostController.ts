@@ -14,7 +14,7 @@ import { responseWrap } from "@/utils/responseWrap";
 
 /**
  * @openapi
- * /api/HttpPostController:
+ * /api/post/test:
  *   post:
  *     tags: [信息类]
  *     summary: POST请求示例
@@ -51,12 +51,8 @@ import { responseWrap } from "@/utils/responseWrap";
  *                   type: string
  *                   description: 状态信息(如果code不等于0的话会将错误信息打印到这里)
  */
-export const router = Router().post("/api/HttpPostController", responseWrap(async (request: Request, response: Response) => {
-  return await IOCContainer.get(HttpPostProcess).execute(request, response);
-}));
-
 @injectable()
-export class HttpPostProcess {
+export class TestPostController {
 
   constructor(
     // @inject(QueryBuilderManager) private readonly queryBuilderManager: QueryBuilderManager,
@@ -66,6 +62,12 @@ export class HttpPostProcess {
     @inject(RequestFactoryServiceFactory) private readonly $RequestFactoryServiceProvider: RequestFactoryServiceProvider,
     @inject(TransientFactoryServiceFactory) private readonly $TransientFactoryServiceProvider: TransientFactoryServiceProvider
   ) { };
+
+  public getRouter() {
+    return Router().post("/api/post/test", responseWrap(async (request: Request, response: Response) => {
+      return await this.execute(request, response);
+    }));
+  };
 
   public async execute(request: Request, response: Response): Promise<any> {
     const transientFactoryResult1 = await this.$TransientFactoryServiceProvider().execute();
@@ -85,4 +87,4 @@ export class HttpPostProcess {
 
 };
 
-IOCContainer.bind(HttpPostProcess).toSelf().inRequestScope();
+IOCContainer.bind(TestPostController).toSelf().inRequestScope();

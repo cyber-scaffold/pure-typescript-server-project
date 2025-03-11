@@ -4,7 +4,7 @@ const swagger_jsdoc = require("swagger-jsdoc");
 
 /** 生成Swagger文档相关的方法 **/
 module.exports = async function generate_swagger_docs() {
-  const dist_filename = path.resolve(process.cwd(), "./dist/swagger_api.json");
+  const dist_filename = path.resolve(process.cwd(), "./dist/public/swagger/api.json");
   const swagger_api_docs = swagger_jsdoc({
     definition: {
       openapi: "3.0.0",
