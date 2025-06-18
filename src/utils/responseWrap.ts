@@ -8,7 +8,7 @@ interface IOptions {
 
 const default_options = {
   successPadding: (response_value: any) => {
-    if (isBoolean(responseWrap)) {
+    if (isBoolean(response_value)) {
       return { code: 0, data: response_value, message: "ok" };
     };
     return { code: 0, data: response_value || null, message: "ok" };
