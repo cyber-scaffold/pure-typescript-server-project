@@ -1,3 +1,4 @@
+import { isBoolean } from "lodash";
 import { Request, Response } from "express";
 
 interface IOptions {
@@ -7,6 +8,9 @@ interface IOptions {
 
 const default_options = {
   successPadding: (response_value: any) => {
+    if (isBoolean(responseWrap)) {
+      return { code: 0, data: response_value, message: "ok" };
+    };
     return { code: 0, data: response_value || null, message: "ok" };
   },
   errorPadding: (message: any) => {
