@@ -8,7 +8,7 @@ module.exports = {
   target: "node",
   devtool: "source-map",
   resolve: {
-    extensions: [".js", ".json", ".ts", ".tsx"],
+    extensions: [".js", ".jsx", ".json", ".ts", ".tsx"],
     alias: {
       "@": path.resolve(process.cwd(), "./src/"),
       "@@": process.cwd(),
