@@ -1,0 +1,29 @@
+import fs from "fs";
+import { promisify } from "util";
+import pathExists from "path-exists";
+import { injectable, inject } from "inversify";
+
+import { IOCContainer } from "@/frameworks/mvc-server-build-tool/cores/IOCContainer";
+import { FrameworkConfigManager } from "@/frameworks/mvc-server-build-tool/commons/FrameworkConfigManager";
+
+@injectable()
+export class CompilerActionService {
+
+  constructor (
+    @inject(FrameworkConfigManager) private readonly $FrameworkConfigManager: FrameworkConfigManager
+  ) { };
+
+  /**
+   * 清理编译目录
+   * **/
+  public async cleanDestnation() {
+    const { assetsDirectoryPath } = this.$FrameworkConfigManager.getRuntimeConfig();
+    if (!await pathExists(assetsDirectoryPath)) {
+      return false;
+    };
+    await promisify(fs.rm)(assetsDirectoryPath, { recursive: true });
+  };
+
+};
+
+IOCContainer.bind(CompilerActionService).toSelf().inRequestScope();
