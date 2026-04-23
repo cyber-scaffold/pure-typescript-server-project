@@ -1,1 +1,10 @@
+import path from "path";
+import {
+  saveProjectDirectoryAbsolutePath,
+  saveProjectEntryFileAbsolutePath
+} from "@/frameworks/mvc-server-tool-box/runtime";
+
+saveProjectDirectoryAbsolutePath(path.resolve(path.dirname(__filename),"../"));
+saveProjectEntryFileAbsolutePath(__filename);
+
 import "$$REAL_ENTRY_FILE_FULL_PATH$$";
