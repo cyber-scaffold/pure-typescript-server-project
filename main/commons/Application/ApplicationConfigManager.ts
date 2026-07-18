@@ -10,6 +10,7 @@ import { IOCContainer } from "@/main/cores/IOCContainer";
 export class ApplicationConfigManager {
 
   private server = {
+    address: "0.0.0.0",
     port: 15200
   };
 
