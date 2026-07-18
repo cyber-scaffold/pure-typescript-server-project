@@ -46,9 +46,7 @@ export class ApplicationConfigManager {
    * 用户自定义的静态资源指向的目录
    * 框架层的基准目录是根据 项目根目录的绝对路径 计算得到的
    * **/
-  private async getCustmerStaticResourceDirectory() {
-    return path.join(os.homedir(), "./statics/");
-  };
+  private custmerStaticResourceDirectory: string = path.join(os.homedir(), "statics");
 
   /** 初始化并加载配置到运行时 **/
   public async initialize() {
@@ -66,8 +64,8 @@ export class ApplicationConfigManager {
       rabbitmq: this.rabbitmq,
       assetsDirectoryName: resourcePathInfo.assetsDirectoryPath,
       swaggerResourceDirectory: resourcePathInfo.swaggerResourceDirectory,
-      projectStaticResourceDirectory: resourcePathInfo.projectStaticResourceDirectory,
-      custmerStaticResourceDirectory: await this.getCustmerStaticResourceDirectory()
+      custmerStaticResourceDirectory: this.custmerStaticResourceDirectory,
+      projectStaticResourceDirectory: resourcePathInfo.projectStaticResourceDirectory
     };
   };
 
