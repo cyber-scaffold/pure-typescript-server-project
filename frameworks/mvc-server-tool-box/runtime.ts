@@ -1,4 +1,6 @@
 
+export { getResourcePathInfo } from "@/frameworks/mvc-server-tool-box/getResourcePathInfo";
+
 export { saveProjectDirectoryAbsolutePath } from "@/frameworks/mvc-server-tool-box/globalSingletonStorage";
 export { readProjectDirectoryAbsolutePath } from "@/frameworks/mvc-server-tool-box/globalSingletonStorage";
 

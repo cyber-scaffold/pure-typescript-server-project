@@ -56,7 +56,7 @@ export class ExpressHttpServer {
     this.expressInstance.use(this.$TestPostController.getRouter());
     this.expressInstance.use(this.$TestGetController.getRouter());
     /** 启动服务器监听端口 **/
-    this.serverInstance = this.expressInstance.listen(server.port, async () => {
+    this.serverInstance = this.expressInstance.listen(server.port, "0.0.0.0", async () => {
       try {
         logger.info("Address %s", this.serverInstance.address());
       } catch (error) {
