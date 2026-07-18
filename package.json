@@ -1,7 +1,7 @@
 {
-  "name": "pure-typescript-server-project",
+  "name": "express-mvc-server-project",
   "version": "1.0.0",
-  "description": "基于typescript和express的纯后端项目",
+  "description": "基于typescript和express的纯后端MVC项目",
   "main": "./dist/server.js",
   "scripts": {
     "dev": "node -r esbuild-register ./frameworks/mvc-server-build-tool/development.ts",
