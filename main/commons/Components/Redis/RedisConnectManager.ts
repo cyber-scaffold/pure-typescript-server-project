@@ -1,8 +1,12 @@
+import { createClient } from "redis";
 import { injectable, inject } from "inversify";
-import { createClient, RedisClientType } from "redis";
 
-import { IOCContainer } from "@/main/cores/IOCContainer";
-import { ApplicationConfigManager } from "@/main/commons/Application/ApplicationConfigManager";
+import { ApplicationConfigManager } from "@/main/server/commons/Application/ApplicationConfigManager";
+import { IOCContainer } from "@/main/server/cores/IOCContainer";
+
+import { logger } from "@/main/server/utils/logger";
+
+import { RedisClientType } from "redis";
 
 @injectable()
 export class RedisConnectManager {
@@ -23,13 +27,13 @@ export class RedisConnectManager {
       });
 
       this.connection.on("error", async (error) => {
-        console.log("Redis出现错误,2s后重新连接... ...", error);
+        logger.error("Redis 出现错误,2s后重新连接... ...", error);
         return setTimeout(this.initialize, 2000);
       });
 
       await this.connection.connect();
 
-      console.log("Redis连接成功!");
+      logger.info("Redis 连接成功!");
     } catch (error: any) {
       this.connection.removeAllListeners("error");
       throw error;

@@ -1,10 +1,9 @@
 import amqp from "amqplib";
-import { red, green } from "colors";
 import { injectable, inject } from "inversify";
 
-import { IOCContainer } from "@/main/cores/IOCContainer";
-import { ApplicationConfigManager } from "@/main/commons/Application/ApplicationConfigManager";
-import { logger } from "@/main/utils/logger";
+import { ApplicationConfigManager } from "@/main/server/commons/Application/ApplicationConfigManager";
+import { IOCContainer } from "@/main/server/cores/IOCContainer";
+import { logger } from "@/main/server/utils/logger";
 
 import type { Connection } from "amqplib";
 
@@ -60,14 +59,14 @@ export class LimitedRabbitmqProducer {
         protocol: "amqp",
         ...rabbitConfig
       });
-      logger.info(green("RabbitMQ-生产者-连接成功!"));
+      logger.info("RabbitMQ-生产者-连接成功!");
       /** 处理断线重连 **/
       this.connection.on("close", (error) => {
-        logger.error("RabbitMQ连接已关闭,2s后准备重新连接", error);
+        logger.error("RabbitMQ连接已关闭,2s后准备重新连接 %s", error);
         return setTimeout(this.initialize, 2000);
       });
     } catch (error) {
-      logger.error(red("RabbitMQ连接初始化发生错误,2s后准备重新连接"), error);
+      logger.error("RabbitMQ连接初始化发生错误,2s后准备重新连接 %s", error);
       return setTimeout(this.initialize, 2000);
     };
   };
@@ -75,7 +74,7 @@ export class LimitedRabbitmqProducer {
   /** 销毁连接,用于单元测试 **/
   public async destroy() {
     await this.connection.close();
-    console.log("RabbitMQ 已断开连接!!!");
+    logger.warn("RabbitMQ 已断开连接!!!");
   };
 
   /** 创建一个并行队列 **/

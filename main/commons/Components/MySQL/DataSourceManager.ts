@@ -1,11 +1,11 @@
 import { DataSource } from "typeorm";
 import { injectable, inject } from "inversify";
 
-import { IOCContainer } from "@/main/cores/IOCContainer";
-import { ApplicationConfigManager } from "@/main/commons/Application/ApplicationConfigManager";
-import { logger } from "@/main/utils/logger";
+import { ApplicationConfigManager } from "@/main/server/commons/Application/ApplicationConfigManager";
+import { IOCContainer } from "@/main/server/cores/IOCContainer";
 
-/** 很多分库分表都是在应用层完成的,一般都是根据数据库名进行区分 **/
+import { logger } from "@/main/server/utils/logger";
+
 @injectable()
 export class DataSourceManager {
 
@@ -27,7 +27,7 @@ export class DataSourceManager {
       password: mysql.password,
       database: mysql.database,
       entities: [],
-      synchronize: false
+      synchronize: true
     });
     await this.appDataSource.initialize();
     logger.info("AppDataSource 连接成功!");

@@ -1,8 +1,12 @@
+import { createConnection } from "mongoose";
 import { injectable, inject } from "inversify";
-import { createConnection, Connection } from "mongoose";
 
-import { IOCContainer } from "@/main/cores/IOCContainer";
-import { ApplicationConfigManager } from "@/main/commons/Application/ApplicationConfigManager";
+import { ApplicationConfigManager } from "@/main/server/commons/Application/ApplicationConfigManager";
+import { IOCContainer } from "@/main/server/cores/IOCContainer";
+
+import { logger } from "@/main/server/utils/logger";
+
+import type { Connection } from "mongoose";
 
 @injectable()
 export class MongooseConnectManager {
@@ -20,16 +24,16 @@ export class MongooseConnectManager {
       const connectionURL = `mongodb://${username}:${password}@${host}:${port}/${database}?authSource=admin`;
       const connection = await createConnection(connectionURL);
       this.connection = connection;
-      console.log("mongoose 连接成功!!!");
+      logger.info("Mongoose 连接成功!!!");
     } catch (error) {
-      console.log("mongoose 连接失败!!!", error);
+      logger.error("Mongoose 连接失败!!! %s", error);
     };
   };
 
   /** 销毁连接,用于单元测试 **/
   public async destroy() {
     await this.connection.destroy();
-    console.log("mongoose 连接已销毁!!!");
+    logger.info("Mongoose 连接已销毁!!!");
   };
 
   public async getDatabaseWithName(databaseName) {
