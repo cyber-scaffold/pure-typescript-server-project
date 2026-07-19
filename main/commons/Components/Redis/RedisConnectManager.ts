@@ -1,10 +1,10 @@
 import { createClient } from "redis";
 import { injectable, inject } from "inversify";
 
-import { ApplicationConfigManager } from "@/main/server/commons/Application/ApplicationConfigManager";
-import { IOCContainer } from "@/main/server/cores/IOCContainer";
+import { ApplicationConfigManager } from "@/main/commons/Application/ApplicationConfigManager";
+import { IOCContainer } from "@/main/cores/IOCContainer";
 
-import { logger } from "@/main/server/utils/logger";
+import { logger } from "@/main/utils/logger";
 
 import { RedisClientType } from "redis";
 
